@@ -38,7 +38,6 @@ import BulkActions from './BulkActions'
 import { ApkService } from 'src/services/apk.service'
 import { ApkModel } from 'src/models/apk.model'
 import { Search } from '@material-ui/icons'
-import { ChangeEventHandler } from 'react-transition-group/node_modules/@types/react'
 
 interface ApkTableProps {
     className?: string
@@ -55,8 +54,9 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
     const [total, setTotal] = useState<number>(0)
     useEffect(() => {
         apkService.list(query, pageNo, pageSize).then((data) => {
-            setApks(data.rows)
-            setTotal(data.total)
+            console.log(data)
+            // setApks(data.rows)
+            // setTotal(data.total)
         })
     }, [])
 
