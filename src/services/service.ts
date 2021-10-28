@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Result } from 'src/models/common'
 
 const service = axios.create({
-    baseURL: 'http://',
+    baseURL: 'http://23.237.34.178/api',
     timeout: 1000 * 60 * 10,
 })
 
@@ -26,7 +26,10 @@ service.interceptors.response.use(
             console.log(data.message)
         }
     },
-    (error) => {},
+    (error) => {
+        alert(error)
+        throw error
+    },
 )
 
 export default service

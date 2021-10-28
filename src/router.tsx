@@ -8,11 +8,11 @@ import BaseLayout from 'src/layouts/BaseLayout'
 import SuspenseLoader from 'src/components/SuspenseLoader'
 
 const Loader = (Component) => (props) =>
-  (
-    <Suspense fallback={<SuspenseLoader />}>
-      <Component {...props} />
-    </Suspense>
-  )
+    (
+        <Suspense fallback={<SuspenseLoader />}>
+            <Component {...props} />
+        </Suspense>
+    )
 
 // Pages
 
@@ -49,161 +49,161 @@ const StatusComingSoon = Loader(lazy(() => import('src/content/pages/Status/Comi
 const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Maintenance')))
 
 const routes: PartialRouteObject[] = [
-  // {
-  //   path: '*',
-  //   element: <BaseLayout />,
-  //   children: [
-  //     {
-  //       path: '/',
-  //       element: <Overview />
-  //     },
-  //     {
-  //       path: 'overview',
-  //       element: (
-  //         <Navigate
-  //           to="/"
-  //           replace
-  //         />
-  //       )
-  //     },
-  //     {
-  //       path: 'status',
-  //       children: [
-  //         {
-  //           path: '/',
-  //           element: (
-  //             <Navigate
-  //               to="404"
-  //               replace
-  //             />
-  //           )
-  //         },
-  //         {
-  //           path: '404',
-  //           element: <Status404 />
-  //         },
-  //         {
-  //           path: '500',
-  //           element: <Status500 />
-  //         },
-  //         {
-  //           path: 'maintenance',
-  //           element: <StatusMaintenance />
-  //         },
-  //         {
-  //           path: 'coming-soon',
-  //           element: <StatusComingSoon />
-  //         },
-  //       ]
-  //     },
-  //     {
-  //       path: '*',
-  //       element: <Status404 />
-  //     },
-  //   ]
-  // },
-  {
-    path: 'dashboards',
-    element: <SidebarLayout />,
-    children: [
-      {
-        path: '/',
-        element: <Navigate to="/dashboards/crypto" replace />,
-      },
-      {
-        path: 'crypto',
-        element: <Crypto />,
-      },
-      {
-        path: 'messenger',
-        element: <Messenger />,
-      },
-    ],
-  },
-  {
-    path: '*',
-    element: <SidebarLayout />,
-    children: [
-      {
-        path: '/',
-        element: <Navigate to="/apk" replace />,
-      },
-      {
-        path: 'apk',
-        element: <Apk />,
-      },
-      // {
-      //   path: "profile",
-      //   children: [
-      //     {
-      //       path: "/",
-      //       element: <Navigate to="details" replace />,
-      //     },
-      //     {
-      //       path: "details",
-      //       element: <UserProfile />,
-      //     },
-      //     {
-      //       path: "settings",
-      //       element: <UserSettings />,
-      //     },
-      //   ],
-      // },
-    ],
-  },
-  // {
-  //   path: 'components',
-  //   element: (
-  //     <SidebarLayout />
-  //   ),
-  //   children: [
-  //     {
-  //       path: '/',
-  //       element: (
-  //         <Navigate
-  //           to="/components/buttons"
-  //           replace
-  //         />
-  //       )
-  //     },
-  //     {
-  //       path: 'buttons',
-  //       element: <Buttons />
-  //     },
-  //     {
-  //       path: 'modals',
-  //       element: <Modals />
-  //     },
-  //     {
-  //       path: 'accordions',
-  //       element: <Accordions />
-  //     },
-  //     {
-  //       path: 'tabs',
-  //       element: <Tabs />
-  //     },
-  //     {
-  //       path: 'badges',
-  //       element: <Badges />
-  //     },
-  //     {
-  //       path: 'tooltips',
-  //       element: <Tooltips />
-  //     },
-  //     {
-  //       path: 'avatars',
-  //       element: <Avatars />
-  //     },
-  //     {
-  //       path: 'cards',
-  //       element: <Cards />
-  //     },
-  //     {
-  //       path: 'forms',
-  //       element: <Forms />
-  //     },
-  //   ]
-  // }
+    // {
+    //   path: '*',
+    //   element: <BaseLayout />,
+    //   children: [
+    //     {
+    //       path: '/',
+    //       element: <Overview />
+    //     },
+    //     {
+    //       path: 'overview',
+    //       element: (
+    //         <Navigate
+    //           to="/"
+    //           replace
+    //         />
+    //       )
+    //     },
+    //     {
+    //       path: 'status',
+    //       children: [
+    //         {
+    //           path: '/',
+    //           element: (
+    //             <Navigate
+    //               to="404"
+    //               replace
+    //             />
+    //           )
+    //         },
+    //         {
+    //           path: '404',
+    //           element: <Status404 />
+    //         },
+    //         {
+    //           path: '500',
+    //           element: <Status500 />
+    //         },
+    //         {
+    //           path: 'maintenance',
+    //           element: <StatusMaintenance />
+    //         },
+    //         {
+    //           path: 'coming-soon',
+    //           element: <StatusComingSoon />
+    //         },
+    //       ]
+    //     },
+    //     {
+    //       path: '*',
+    //       element: <Status404 />
+    //     },
+    //   ]
+    // },
+    {
+        path: 'dashboards',
+        element: <SidebarLayout />,
+        children: [
+            {
+                path: '/',
+                element: <Navigate to="/dashboards/crypto" replace />,
+            },
+            {
+                path: 'crypto',
+                element: <Crypto />,
+            },
+            {
+                path: 'messenger',
+                element: <Messenger />,
+            },
+        ],
+    },
+    {
+        path: '*',
+        element: <SidebarLayout />,
+        children: [
+            {
+                path: '/',
+                element: <Navigate to="/apk" replace />,
+            },
+            {
+                path: 'apk',
+                element: <Apk />,
+            },
+            // {
+            //   path: "profile",
+            //   children: [
+            //     {
+            //       path: "/",
+            //       element: <Navigate to="details" replace />,
+            //     },
+            //     {
+            //       path: "details",
+            //       element: <UserProfile />,
+            //     },
+            //     {
+            //       path: "settings",
+            //       element: <UserSettings />,
+            //     },
+            //   ],
+            // },
+        ],
+    },
+    // {
+    //   path: 'components',
+    //   element: (
+    //     <SidebarLayout />
+    //   ),
+    //   children: [
+    //     {
+    //       path: '/',
+    //       element: (
+    //         <Navigate
+    //           to="/components/buttons"
+    //           replace
+    //         />
+    //       )
+    //     },
+    //     {
+    //       path: 'buttons',
+    //       element: <Buttons />
+    //     },
+    //     {
+    //       path: 'modals',
+    //       element: <Modals />
+    //     },
+    //     {
+    //       path: 'accordions',
+    //       element: <Accordions />
+    //     },
+    //     {
+    //       path: 'tabs',
+    //       element: <Tabs />
+    //     },
+    //     {
+    //       path: 'badges',
+    //       element: <Badges />
+    //     },
+    //     {
+    //       path: 'tooltips',
+    //       element: <Tooltips />
+    //     },
+    //     {
+    //       path: 'avatars',
+    //       element: <Avatars />
+    //     },
+    //     {
+    //       path: 'cards',
+    //       element: <Cards />
+    //     },
+    //     {
+    //       path: 'forms',
+    //       element: <Forms />
+    //     },
+    //   ]
+    // }
 ]
 
 export default routes

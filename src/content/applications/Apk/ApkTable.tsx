@@ -55,6 +55,7 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
     const [total, setTotal] = useState<number>(0)
     useEffect(() => {
         apkService.list(query, pageNo, pageSize).then((data) => {
+            debugger
             setApks(data.rows)
             setTotal(data.total)
         })

@@ -7,15 +7,15 @@ import ThemeProvider from './theme/ThemeProvider'
 import { CssBaseline } from '@material-ui/core'
 
 const App = () => {
-  const content = useRoutes(routes)
+    const content = useRoutes(routes)
 
-  return (
-    <ThemeProvider>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <CssBaseline />
-        {content}
-      </LocalizationProvider>
-    </ThemeProvider>
-  )
+    return (
+        <ThemeProvider>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <CssBaseline />
+                {content}
+            </LocalizationProvider>
+        </ThemeProvider>
+    )
 }
 export default App
