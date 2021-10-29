@@ -26,6 +26,7 @@ const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')))
 
 const Messenger = Loader(lazy(() => import('src/content/applications/Messenger')))
 const Apk = Loader(lazy(() => import('src/content/applications/Apk')))
+const Login = Loader(lazy(() => import('src/content/applications/login')))
 const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')))
 const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')))
 
@@ -121,6 +122,10 @@ const routes: PartialRouteObject[] = [
         ],
     },
     {
+        path: 'login',
+        element: <Login />,
+    },
+    {
         path: '*',
         element: <SidebarLayout />,
         children: [
@@ -132,6 +137,7 @@ const routes: PartialRouteObject[] = [
                 path: 'apk',
                 element: <Apk />,
             },
+
             // {
             //   path: "profile",
             //   children: [

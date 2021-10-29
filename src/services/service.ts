@@ -8,7 +8,8 @@ const service = axios.create({
 
 service.interceptors.request.use(
     (config) => {
-        console.log(config)
+        const jwt = sessionStorage.getItem('jwt')
+        config.headers['Authorization'] = jwt ? jwt : ''
         return config
     },
     (error) => {
@@ -21,9 +22,10 @@ service.interceptors.response.use(
     (response) => {
         const data: Result<any> = response.data as Result<any>
         if (data.code == 0) {
-            return data
+            return data.data
         } else {
-            console.log(data.message)
+            alert(data.message)
+            throw new Error(data.message)
         }
     },
     (error) => {
