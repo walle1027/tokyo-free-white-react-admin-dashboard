@@ -1,27 +1,27 @@
-import { Box, Tooltip } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import { experimentalStyled } from '@material-ui/core/styles';
+import { Box, Tooltip } from '@material-ui/core'
+import { Link } from 'react-router-dom'
+import { experimentalStyled } from '@material-ui/core/styles'
 
 const LogoWrapper = experimentalStyled(Link)(
-  ({ theme }) => `
+    ({ theme }) => `
         color: ${theme.palette.text.primary};
         display: flex;
         text-decoration: none;
         width: 53px;
         margin: 0 auto;
         font-weight: ${theme.typography.fontWeightBold};
-`
-);
+`,
+)
 
 const LogoSignWrapper = experimentalStyled(Box)(
-  () => `
+    () => `
         width: 52px;
         height: 38px;
-`
-);
+`,
+)
 
 const LogoSign = experimentalStyled(Box)(
-  ({ theme }) => `
+    ({ theme }) => `
         background: ${theme.general.reactFrameworkColor};
         width: 18px;
         height: 18px;
@@ -54,11 +54,11 @@ const LogoSign = experimentalStyled(Box)(
         &:after {
             background: ${theme.palette.secondary.main};
         }
-`
-);
+`,
+)
 
 const LogoSignInner = experimentalStyled(Box)(
-  ({ theme }) => `
+    ({ theme }) => `
         width: 16px;
         height: 16px;
         position: absolute;
@@ -67,22 +67,21 @@ const LogoSignInner = experimentalStyled(Box)(
         z-index: 5;
         border-radius: ${theme.general.borderRadiusSm};
         background: ${theme.header.background};
-`
-);
+`,
+)
 
 function Logo() {
-
-  return (
-    <Tooltip title="Tokyo Free White React Admin Dashboard" arrow>
-      <LogoWrapper to="/overview">
-        <LogoSignWrapper>
-          <LogoSign>
-            <LogoSignInner />
-          </LogoSign>
-        </LogoSignWrapper>
-      </LogoWrapper>
-    </Tooltip>
-  );
+    return (
+        <Tooltip title="Tokyo Free White React Admin Dashboard" arrow>
+            <LogoWrapper to="/overview">
+                <LogoSignWrapper>
+                    <LogoSign>
+                        <LogoSignInner />
+                    </LogoSign>
+                </LogoSignWrapper>
+            </LogoWrapper>
+        </Tooltip>
+    )
 }
 
-export default Logo;
+export default Logo

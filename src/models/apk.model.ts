@@ -1,7 +1,7 @@
 export interface ApkModel {
     id?: number
     appId?: string
-    title?: string
+    appName?: string
     type?: 'game' | 'app'
     category?: string
     icon?: string
@@ -19,4 +19,5 @@ export interface ApkModel {
     downdloads?: number
     reviews?: number
     requirements?: string
+    isDeleted?: number
 }

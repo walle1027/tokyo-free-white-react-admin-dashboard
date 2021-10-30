@@ -5,4 +5,8 @@ export interface ApkService {
     list(search: string, pageNo: number, pageSize: number): Promise<Pagination<ApkModel>>
 
     save(apk: ApkModel): Promise<void>
+
+    disable(id: number): Promise<void>
+
+    enable(id: number): Promise<void>
 }

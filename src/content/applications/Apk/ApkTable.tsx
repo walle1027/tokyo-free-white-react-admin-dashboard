@@ -1,6 +1,5 @@
 import { FC, ChangeEvent, useState, useEffect } from 'react'
 import { format } from 'date-fns'
-
 import numeral from 'numeral'
 import PropTypes from 'prop-types'
 import {
@@ -34,23 +33,27 @@ import Label from 'src/components/Label'
 import { CryptoOrder, CryptoOrderStatus } from 'src/models/crypto_order'
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone'
 import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone'
+import RestoreTwoTone from '@material-ui/icons/RestoreTwoTone'
 import BulkActions from './BulkActions'
 import { ApkService } from 'src/services/apk.service'
 import { ApkModel } from 'src/models/apk.model'
 import { Search } from '@material-ui/icons'
+import { ChangeEventHandler } from 'react-transition-group/node_modules/@types/react'
+import service from 'src/services/service'
 
 interface ApkTableProps {
-    className?: string
     apkService: ApkService
+    editFunction: (apk: ApkModel) => void
 }
 
-const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
+const ApkTable: FC<ApkTableProps> = ({ apkService, editFunction }) => {
     const [selectedApks, setSelectedApks] = useState<number[]>([])
     const selectedBulkActions = selectedApks.length > 0
     const [pageNo, setPageNo] = useState<number>(0)
     const [pageSize, setPageSize] = useState<number>(10)
     const [apks, setApks] = useState<ApkModel[]>([])
     const [query, setQuery] = useState<string>('')
+    const [search, setSearch] = useState<string>('')
     const [total, setTotal] = useState<number>(0)
     useEffect(() => {
         apkService.list(query, pageNo, pageSize).then((data) => {
@@ -58,7 +61,7 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
             // setApks(data.rows)
             // setTotal(data.total)
         })
-    }, [])
+    }, [pageNo, pageSize, query])
 
     const handleSelectAll = (event: ChangeEvent<HTMLInputElement>): void => {
         setSelectedApks(event.target.checked ? apks.map((apk) => apk.id) : [])
@@ -74,24 +77,40 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
 
     const handlePageChange = (event: any, newPage: number): void => {
         setPageNo(newPage)
-        reload()
     }
 
     const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setPageSize(parseInt(event.target.value))
-        reload()
     }
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
-        setQuery(event.target.value)
+        setSearch(event.target.value)
     }
 
-    const reload = (): void => {
-        apkService.list(query, pageNo, pageSize).then((data) => {
-            setApks(data.rows)
-            setTotal(data.total)
-        })
+    const handleDisable = (id: number): void => {
+        apkService
+            .disable(id)
+            .then(() => {
+                return apkService.list(query, pageNo, pageSize)
+            })
+            .then((data) => {
+                setApks(data.rows)
+                setTotal(data.total)
+            })
     }
+
+    const handleEnable = (id: number): void => {
+        apkService
+            .enable(id)
+            .then(() => {
+                return apkService.list(query, pageNo, pageSize)
+            })
+            .then((data) => {
+                setApks(data.rows)
+                setTotal(data.total)
+            })
+    }
+
     // const paginatedCryptoOrders = applyPagination(filteredCryptoOrders, page, limit)
     const selectedSome = selectedApks.length > 0 && selectedApks.length < apks.length
     const selectedAll = selectedApks.length === apks.length
@@ -116,10 +135,17 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
                                 type="text"
                                 fullWidth={true}
                                 onChange={handleSearchChange}
-                                value={query}
+                                value={search}
                                 endAdornment={
                                     <InputAdornment position="end">
-                                        <IconButton aria-label="toggle password visibility" onClick={reload} edge="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => {
+                                                setQuery(search)
+                                                setPageNo(0)
+                                            }}
+                                            edge="end"
+                                        >
                                             <Search fontSize="small" />
                                         </IconButton>
                                     </InputAdornment>
@@ -172,7 +198,7 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
                                     </TableCell>
                                     <TableCell>
                                         <Typography variant="body1" fontWeight="bold" color="text.primary" gutterBottom noWrap>
-                                            {apk.title}
+                                            {apk.appName}
                                         </Typography>
                                     </TableCell>
                                     <TableCell>
@@ -195,15 +221,19 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
                                     </TableCell>
                                     <TableCell>
                                         <Typography variant="body2" color="text.secondary" noWrap>
-                                            {format(apk.publishDate, 'MMMM dd yyyy')}
+                                            {/* {format(apk.publishDate, 'MMMM dd yyyy')} */}
+                                            {apk.publishDate}
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
                                         <Typography variant="body1" fontWeight="bold" color="text.primary" gutterBottom noWrap>
                                             {apk.downdloads}
                                         </Typography>
+                                    </TableCell>
+                                    <TableCell align="right">
                                         <Typography variant="body2" color="text.secondary" noWrap>
-                                            {numeral(apk.reviews).format(`${apk.reviews}0,0.00`)}
+                                            {/* {numeral(apk.reviews).format(`${apk.reviews}0,0.00`)} */}
+                                            {apk.reviews}
                                         </Typography>
                                     </TableCell>
                                     <TableCell align="right">
@@ -217,22 +247,48 @@ const ApkTable: FC<ApkTableProps> = ({ apkService }) => {
                                                 }}
                                                 color="inherit"
                                                 size="small"
+                                                onClick={() => {
+                                                    editFunction(apk)
+                                                }}
                                             >
                                                 <EditTwoToneIcon fontSize="small" />
                                             </IconButton>
                                         </Tooltip>
-                                        <Tooltip title="Delete Apk" arrow>
-                                            <IconButton
-                                                sx={{
-                                                    '&:hover': { background: theme.colors.error.lighter },
-                                                    color: theme.palette.error.main,
-                                                }}
-                                                color="inherit"
-                                                size="small"
-                                            >
-                                                <DeleteTwoToneIcon fontSize="small" />
-                                            </IconButton>
-                                        </Tooltip>
+                                        {apk.isDeleted === 0 ? (
+                                            <Tooltip title="Disable Apk" arrow>
+                                                <IconButton
+                                                    sx={{
+                                                        '&:hover': { background: theme.colors.error.lighter },
+                                                        color: theme.palette.error.main,
+                                                    }}
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={() => {
+                                                        handleDisable(apk.id)
+                                                    }}
+                                                >
+                                                    <DeleteTwoToneIcon fontSize="small" />
+                                                    Disable
+                                                </IconButton>
+                                            </Tooltip>
+                                        ) : (
+                                            <Tooltip title="Enable Apk" arrow>
+                                                <IconButton
+                                                    sx={{
+                                                        '&:hover': { background: theme.colors.error.lighter },
+                                                        color: theme.palette.success.main,
+                                                    }}
+                                                    color="inherit"
+                                                    size="small"
+                                                    onClick={() => {
+                                                        handleEnable(apk.id)
+                                                    }}
+                                                >
+                                                    <RestoreTwoTone fontSize="small" />
+                                                    Enable
+                                                </IconButton>
+                                            </Tooltip>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             )
