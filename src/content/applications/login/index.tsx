@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button, Card, FormGroup, Grid, TextField } from '@material-ui/core'
 import { FC, useState } from 'react'
 import CustomInput from 'src/components/CustomInput'
 import { DefaultLoginService } from 'src/services/impl/default.login.service'
@@ -11,6 +11,8 @@ const Login: FC = () => {
     const [password, setPassword] = useState<string>('')
 
     const handleLogin = () => {
+        console.log(account)
+        console.log(password)
         loginService.login(account, password).then((result) => {
             if (result != null) {
                 sessionStorage.setItem('jwt', result)
@@ -18,37 +20,26 @@ const Login: FC = () => {
             }
         })
     }
+    const hanldeAccount = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setAccount(event.target.value)
+    }
+    const hanldePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value)
+    }
     return (
-        <div className="App">
-            <form className="form">
-                <CustomInput
-                    labelText="Account"
-                    id="account"
-                    formControlProps={{
-                        fullWidth: true,
-                    }}
-                    handleChange={(event) => {
-                        setAccount(event.target.value)
-                    }}
-                    type="text"
-                />
-                <CustomInput
-                    labelText="Password"
-                    id="password"
-                    formControlProps={{
-                        fullWidth: true,
-                    }}
-                    handleChange={(event) => {
-                        setPassword(event.target.value)
-                    }}
-                    type="password"
-                />
-
-                <Button type="button" color="primary" className="form__custom-button" onClick={handleLogin}>
+        <Grid container md rowSpacing={3} sx={{ textAlign: 'center', paddingTop: 20 }}>
+            <Grid item xs={12}>
+                <TextField sx={{ width: 300 }} required id="outlined-required" onChange={hanldeAccount} label="Accoount" defaultValue="" />
+            </Grid>
+            <Grid item xs={12}>
+                <TextField required sx={{ width: 300 }} id="outlined-disabled" label="Password" onChange={hanldePassword} defaultValue="" type="password" />
+            </Grid>
+            <Grid item xs={12}>
+                <Button type="button" variant="contained" color="primary" onClick={handleLogin}>
                     Log in
                 </Button>
-            </form>
-        </div>
+            </Grid>
+        </Grid>
     )
 }
 

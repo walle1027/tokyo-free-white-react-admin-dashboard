@@ -20,7 +20,6 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
     (response) => {
-        debugger
         const data: Result<any> = response.data as Result<any>
         if (data.code == 0) {
             return data.data

@@ -9,13 +9,14 @@ import { ApkServiceImpl } from 'src/services/impl/default.apk.service'
 import { useState } from 'react'
 import { ApkModel } from 'src/models/apk.model'
 import ApkEdit from './ApkEdit'
+import Logined from 'src/components/Logined'
 
 function ApplicationsTransactions() {
     const apkService: ApkService = new ApkServiceImpl()
     const [open, setOpen] = useState<boolean>(false)
     const [apk, setApk] = useState<ApkModel>({})
     return (
-        <>
+        <Logined>
             <Helmet>
                 <title>Apk - Management</title>
             </Helmet>
@@ -41,7 +42,7 @@ function ApplicationsTransactions() {
                 />
             </Box>
             <Footer />
-        </>
+        </Logined>
     )
 }
 
